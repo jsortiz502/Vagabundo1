@@ -1,4 +1,4 @@
-class field:
+class Field:
     def __init__(self):
             self.homeless_coordinates = {}
         
