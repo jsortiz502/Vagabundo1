@@ -1,7 +1,6 @@
 class field:
     def __init__(self):
             self.homeless_coordinates = {}
-
         
     def add_homless(self, homeless, coordinate):
         self.homeless_coordinates[homeless] = coordinate
