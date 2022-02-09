@@ -1,9 +1,17 @@
 
-from vagabundo import StandarHomeless
+from vagabundo import StandarHomeless, Left_Homeless
 from field import Field
 from coordinate import Coordinate
 
 from bokeh.plotting import figure, output_file, show
+
+def know_type_homeless(type_homeless):
+    if type_homeless.__name__ == StandarHomeless:
+        return "Vagabundo Estandar"
+    elif type_homeless.__name__ == Moderate_Homeless:
+        return "Vagabundo Moderado"
+    else:
+        return "Vagabundo Izquierdista"
 
 def walking(field, homeless, steps):
     begin = field.get_coordinate(homeless)
