@@ -1,7 +1,7 @@
 import random
 
 class Homeless:
-    def __init__(self, name):
+    def __init__(self, name, x=0, y=0):
         self.name = name
         self.x = x
         self.y = y
@@ -17,7 +17,20 @@ class StandarHomeless(Homeless):
 		super().__init__(name)
 
 	def walk(self):
-		return random.choice([(0,2), (-2,0), (0,2), (0,-2)])
+    dx,dy = random.choice([(1,2), (-1,0), (0,1), (0,-1)])
+    self.x +=dx
+    self.y +=dy
+    return [self.x,self.y]
+
+
+class ModerateHomeless(Homeless):
+    def __init__(self, name):
+        super().__init__(name)
+    def walk(self):
+        dx,dy = random.choice([(0,2),(0,-2),(2,0),(-2,0)])
+        self.x +=dx
+        self.y +=dy
+        return [self.x,self.y]
 
 class Left_Homeless(Homeless):
     

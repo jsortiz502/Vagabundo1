@@ -1,8 +1,9 @@
 
-from vagabundo import StandarHomeless, Left_Homeless
+from vagabundo import StandarHomeless, Moderate_Homeless
 from field import Field
 from coordinate import Coordinate
-
+from turtle import color
+from imp import source_from_cache
 from bokeh.plotting import figure, output_file, show
 
 def know_type_homeless(type_homeless):
@@ -13,30 +14,45 @@ def know_type_homeless(type_homeless):
     else:
         return "Vagabundo Izquierdista"
 
-def walking(field, homeless, steps):
-    begin = field.get_coordinate(homeless)
-    
-    for _ in range(steps):
-        field.move_homeless(homeless)
-        
-    return begin.distance(field.get_coordinate(homeless))
+def walking(homeless,steps,type_homeless):
+    x_graph = [0]
+    y_graph = [0]
+
+    for _ in range (steps-1):
+        homeless.walk()
+        x,y = homeless.posicion()
+        x_graph.append(x)
+        y_graph.append(y)
+    know_homeless = know_type_homeless(type_homeless)
+    graph(x_graph,y_graph,know_homeless,steps)
+
+    return homeless.distance_origin()
+
 
 def simulate_walk(steps, number_of_attemps, type_homeless):
-    homeless = type_homeless(name='Ivan')
-    begin = Coordinate(0, 0)
+    homeless = []
     distance = []
     
-    for _ in range(number_of_attemps):
-        field = Field()
-        field.add_homless(homeless, begin)
-        simulation_walk = walking(field, homeless, steps)
-        distance.append(round(simulation_walk, 1))
-        
+    for i in range (number_of_attemps):
+            
+            homeless.append(type_homeless(name =f"Rasta Cuando{i}"))
+            emulate_walk = walking(homeless[i],steps,type_homeless)
+            distance.append(round(emulate_walk,1))
     return distance
 
-def graph(x,y):
-    paint = figure(title="Random Road", x_axis_label="Steps", y_axis_label="Distance")
+
+def graph(x_graph,y_graph,know,steps):
+
+    paint = figure(title = know, x_axis_label="Steps", y_axis_label="Distance")
     paint.line(x, y, legend_label = "Distance")
+    final_x = x_graph[-1]
+    final_y = y_graph[-1]
+    paint.diamond_cross(0,0,fill_color = "blue", line_color = "blue", size = 18)
+    paint.diamond_cross(final_x,final_y,fill_color = "red",line_color = "red", size = 18)
+    final_stretch_x = [0,final_x]
+    final_stretch_y = [0,final_y]
+    paint.line(final_stretch_x,final_stretch_y,line_width = 2,color = "red")
+
     show(paint)
     
 def main(walk_distance, number_of_attemps, type_homeless):
@@ -56,7 +72,12 @@ def main(walk_distance, number_of_attemps, type_homeless):
         graph(walk_distance, average_walking_distance)
         
 if __name__ == "__main__":
-    walk_distance = [10, 100, 1000, 10000]
-    number_of_attemps = 100
+    walk_distance = [100]
+    number_of_attemps = 2
     
     main(walk_distance, number_of_attemps, StandarHomeless)
+    main(walk_distance, number_of_attemps, Moderate_Homeless)
+    main(walk_distance, number_of_attemps, Left_Homeless)
+    main(walk_distance, number_of_attemps, Right_Homless)
+    
+    
