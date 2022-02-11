@@ -78,6 +78,6 @@ if __name__ == "__main__":
     main(walk_distance, number_of_attemps, StandarHomeless)
     main(walk_distance, number_of_attemps, Moderate_Homeless)
     main(walk_distance, number_of_attemps, Left_Homeless)
-    main(walk_distance, number_of_attemps, Right_Homless)
+    
     
     
